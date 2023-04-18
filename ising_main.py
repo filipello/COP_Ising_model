@@ -1,20 +1,16 @@
 import ising_functions as fn
-import numpy as np
 
 
 
-energy_with_err, magnetization_with_err, specific_heat_with_error, magnetic_susc_with_error, corr_time_with_error = fn.run_simulation()
-
-temperature = np.arange(1, 4.1, 0.2)
-
-fn.plot_corr_time(temperature, corr_time_with_error[0], corr_time_with_error[1])
-
-fn.plot_specific_heat(temperature, specific_heat_with_error[0], specific_heat_with_error[1])
-
-fn.plot_energy(temperature, energy_with_err[0], energy_with_err[1])
-
-fn.plot_average_spin(temperature, magnetization_with_err[0], magnetization_with_err[1])
-
-fn.plot_magnetic_susc(temperature, magnetic_susc_with_error[0], magnetic_susc_with_error[1])
-
-
+initialisation = True
+while initialisation == True:
+    print('This is a simulation of a 2-D Ising model. Please choose one of the following options by pressing the corresponding number\n')
+    print('1. Take all the physical measurements')
+    print('2. Plot the snapshots of the evoluting lattice \n')
+    get_input = input()
+    
+    if get_input == '1':
+        print('Input the value of the external magentic field (float) \n')
+        get_extetnal_field = float(input())
+        fn.run_simulation(get_extetnal_field)
+        break
