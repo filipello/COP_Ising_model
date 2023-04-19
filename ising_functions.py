@@ -79,7 +79,7 @@ def corr_time(chi):
     '''Thiis method integrates the normalized auto-correlation function until it reaches zero in order to return the auto-correlation time'''
     i = 0
     integral = 0
-    while chi[i] >= 0:
+    while chi[i] >= 0 and i < len(chi):
         integral += chi[i]/chi[0]
         i += 1
     return integral
@@ -147,7 +147,11 @@ def run_simulation(magn_field):
     n_spins = 50
     coupling_constant = 1
     n_steps = 100000
-    temperature = np.arange(1.0, 4.1, 0.2)
+    if magn_field != 0:
+        temperature = np.array([1.4, 1.8, 2.0, 2.2, 2.4 ,2.6, 3.0, 4.0])
+    else:
+        temperature = np.arange(1.0, 4.1, 0.2)
+    
     
     energies = np.zeros(len(temperature))
     energies_error = np.zeros(len(temperature))
@@ -184,7 +188,7 @@ def plot_corr_time(temperature, tau, tau_error):
     plt.xlabel('Temperature')
     plt.ylabel(r'$\tau$')
     plt.title('Auto-correlation time')
-    plt.savefig('corr_time.png')
+    plt.savefig('corr_time.png', dpi = 200)
     plt.show()
 
 
@@ -195,8 +199,9 @@ def plot_specific_heat(temperature, spec_heat, spec_heat_err):
     plt.xlabel('Temperature')
     plt.ylabel(r'$C$')
     plt.title('Specific heat')
-    plt.ticklabel_format(style='plain')
-    plt.savefig('sp_heat.png')
+    plt.tight_layout()
+    # plt.ticklabel_format(style='plain')
+    plt.savefig('sp_heat.png', bbox_inches = "tight", dpi = 200)
     plt.show()
     
 def plot_magnetic_susc(temperature, magn_susc, magn_susc_err):
@@ -206,8 +211,8 @@ def plot_magnetic_susc(temperature, magn_susc, magn_susc_err):
     plt.xlabel('Temperature')
     plt.ylabel(r'$\chi_M$')
     plt.title('Magnetic susceptibility')
-    plt.ticklabel_format(style='plain')
-    plt.savefig('magn_susc.png')
+    plt.ticklabel_format(style='sci')
+    plt.savefig('magn_susc.png', bbox_inches = "tight", dpi = 200)
     plt.show()
     
 def plot_average_spin(temperature, magnetization, magnetization_err):
@@ -217,7 +222,7 @@ def plot_average_spin(temperature, magnetization, magnetization_err):
     plt.xlabel('Temperature')
     plt.ylabel(r'$m$')
     plt.title('Mean absolute spin')
-    plt.savefig('magnetization.png')
+    plt.savefig('magnetization.png', dpi = 200)
     plt.show()
     
 def plot_energy(temperature, energy, energy_err):
@@ -227,6 +232,6 @@ def plot_energy(temperature, energy, energy_err):
     plt.xlabel('Temperature')
     plt.ylabel(r'$e$')
     plt.title('Energy per spin')
-    plt.savefig('energy.png')
+    plt.savefig('energy.png', dpi = 200)
     plt.show()
     
